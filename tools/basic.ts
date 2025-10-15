@@ -4,25 +4,27 @@ import { z } from "zod";
 import { WikipediaQueryRun } from "@langchain/community/tools/wikipedia_query_run";
 // import { BraveSearch } from "@langchain/community/tools/brave_search";
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
 export const ChatTasks: ChatTask[] = [
   {
     name: "get_date_time",
     title: "Get time",
-    icon: "http://192.168.1.200:3064/images/time-tool-icon-64.png",
+    icon: `${BASE_URL}/images/time-tool-icon-64.png`,
     emoji: "🕒",
     prompt: "What is the time now?",
   },
   {
     name: "get_weather",
     title: "Get Weather",
-    icon: "http://192.168.1.200:3064/images/time-tool-icon-64.png",
+    icon: `${BASE_URL}/images/time-tool-icon-64.png`,
     prompt: "What is the weather in Tokyo?",
   },
   {
     name: "WikipediaQueryRun",
     title: "Wikipedia",
     emoji: "🌐",
-    icon: "http://192.168.1.200:3064/images/wikipedia-tool-icon-64.png",
+    icon: `${BASE_URL}/images/wikipedia-tool-icon-64.png`,
     prompt: "Search Wikipedia about LangChain",
   },
 ];
