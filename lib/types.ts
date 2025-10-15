@@ -5,3 +5,9 @@ export interface Chat {
   created_at: string;
   is_public: boolean;
 }
+
+export interface ChatTask {
+  title: string;
+  icon: string;
+  prompt: string;
+}

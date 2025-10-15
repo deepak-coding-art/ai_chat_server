@@ -15,7 +15,6 @@ export const get_tool_icon = (toolName: string) => {
 
 export const get_date_time = tool(
   async () => {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
     const time = new Date().toISOString();
     return time;
   },
