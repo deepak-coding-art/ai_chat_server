@@ -3,6 +3,8 @@ import { ChatGroq } from "@langchain/groq";
 import { PostgresSaver } from "@langchain/langgraph-checkpoint-postgres";
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
 import { get_date_time } from "@/tools/basic";
+import { PromptTemplate } from "@langchain/core/prompts";
+import { StringOutputParser } from "@langchain/core/output_parsers";
 
 export const google_model = new ChatGoogleGenerativeAI({
   model: "gemini-2.5-flash",
@@ -42,4 +44,28 @@ export class AgentService {
 
     return AgentService.instance;
   }
+}
+
+export async function generateThreadTitle(
+  userMessage: string,
+  response: string
+): Promise<string> {
+  const titlePrompt = PromptTemplate.fromTemplate(`
+  You are a helpful assistant. 
+  Given the user's message and the agent's response, generate a concise and descriptive thread title.
+  Keep it under 10 words and in plain English.
+  
+  User message: {user_message}
+  Response: {response}
+  Title:
+  `);
+
+  const filledPrompt = await titlePrompt.format({
+    user_message: userMessage,
+    response,
+  });
+
+  const output = await groq_model.invoke(filledPrompt);
+  const title = new StringOutputParser().parse(output.content as string);
+  return title;
 }

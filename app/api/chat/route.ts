@@ -1,31 +1,30 @@
 import { AgentService } from "@/agents/agent";
-import { createNewChat, getChatById, getUserChats } from "@/db/quries";
+import {
+  createNewChat,
+  getChatById,
+  getUserChats,
+  updateChatTitle,
+} from "@/db/quries";
 import { NextRequest, NextResponse } from "next/server";
 import { AuthError, validateAuthAndGetUserId } from "@/lib/auth";
 import { z } from "zod";
 import { get_tool_icon } from "@/tools/basic";
+import { generateThreadTitle } from "@/agents/agent";
+import { Chat } from "@/lib/types";
 
 export async function POST(req: NextRequest) {
   try {
     const userId = await validateAuthAndGetUserId(req);
     const { message, chat_id: chatId } = requestSchema.parse(await req.json());
-    let chat_id = chatId;
-
-    if (!chat_id) {
-      const chat = await createNewChat(userId);
-      if (!chat) {
-        return NextResponse.json(
-          { error: "Failed to create chat" },
-          { status: 500 }
-        );
-      }
-      chat_id = chat.id;
+    let chat: Chat | null = null;
+    if (chatId) {
+      chat = await getChatById(chatId, userId);
+    } else {
+      chat = await createNewChat(userId);
     }
-    if (chat_id) {
-      const chat = await getChatById(chat_id, userId);
-      if (!chat) {
-        return NextResponse.json({ error: "Chat not found" }, { status: 404 });
-      }
+
+    if (!chat) {
+      return NextResponse.json({ error: "Chat not found" }, { status: 404 });
     }
 
     // Create a ReadableStream for SSE
@@ -45,7 +44,7 @@ export async function POST(req: NextRequest) {
               ],
             },
             {
-              configurable: { thread_id: chat_id },
+              configurable: { thread_id: chat.id },
               version: "v2",
             }
           );
@@ -59,7 +58,7 @@ export async function POST(req: NextRequest) {
                 type: "tool_start",
                 tool: toolName,
                 tool_icon: toolIcon,
-                chat_id: chat_id,
+                chat_id: chat.id,
                 message: `🔧 Calling ${toolName}...`,
               };
               controller.enqueue(
@@ -72,7 +71,7 @@ export async function POST(req: NextRequest) {
                 type: "tool_end",
                 tool: toolName,
                 tool_icon: toolIcon,
-                chat_id: chat_id,
+                chat_id: chat.id,
                 message: `✅ Finished ${toolName}`,
                 // output: event.data?.output,
               };
@@ -86,7 +85,7 @@ export async function POST(req: NextRequest) {
                 const data = {
                   type: "token",
                   content: chunk.content,
-                  chat_id: chat_id,
+                  chat_id: chat.id,
                 };
                 controller.enqueue(
                   encoder.encode(`data: ${JSON.stringify(data)}\n\n`)
@@ -102,11 +101,15 @@ export async function POST(req: NextRequest) {
               const data = {
                 type: "final",
                 message: finalMessage,
-                chat_id: chat_id,
+                chat_id: chat.id,
               };
               controller.enqueue(
                 encoder.encode(`data: ${JSON.stringify(data)}\n\n`)
               );
+              if (!chat.title) {
+                const title = await generateThreadTitle(message, finalMessage);
+                await updateChatTitle(chat.id, title);
+              }
             }
           }
 
@@ -160,9 +163,45 @@ export async function POST(req: NextRequest) {
 export async function GET(req: NextRequest) {
   try {
     const userId = await validateAuthAndGetUserId(req);
-    const chats = await getUserChats(userId);
+    const { searchParams } = new URL(req.url);
+
+    // Parse pagination parameters
+    const page = parseInt(searchParams.get("page") || "1", 10);
+    const limit = parseInt(searchParams.get("limit") || "10", 10);
+
+    // Validate pagination parameters
+    if (page < 1) {
+      return NextResponse.json(
+        { error: "Page must be greater than 0" },
+        { status: 400 }
+      );
+    }
+
+    if (limit < 1 || limit > 100) {
+      return NextResponse.json(
+        { error: "Limit must be between 1 and 100" },
+        { status: 400 }
+      );
+    }
+
+    const result = await getUserChats(userId, page, limit);
+
+    if (!result) {
+      return NextResponse.json(
+        { error: "Failed to fetch chats" },
+        { status: 500 }
+      );
+    }
+
     return NextResponse.json({
-      chats,
+      chats: result.chats,
+      pagination: {
+        page,
+        limit,
+        total: result.total,
+        hasMore: result.hasMore,
+        totalPages: Math.ceil(result.total / limit),
+      },
     });
   } catch (error) {
     if (error instanceof AuthError) {
