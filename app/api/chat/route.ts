@@ -3,6 +3,7 @@ import { createNewChat, getChatById, getUserChats } from "@/db/quries";
 import { NextRequest, NextResponse } from "next/server";
 import { AuthError, validateAuthAndGetUserId } from "@/lib/auth";
 import { z } from "zod";
+import { get_tool_icon } from "@/tools/basic";
 
 export async function POST(req: NextRequest) {
   try {
@@ -53,9 +54,11 @@ export async function POST(req: NextRequest) {
             // Send different types of events based on the event type
             if (event.event === "on_tool_start") {
               const toolName = event.name;
+              const toolIcon = get_tool_icon(toolName);
               const data = {
                 type: "tool_start",
                 tool: toolName,
+                tool_icon: toolIcon,
                 chat_id: chat_id,
                 message: `🔧 Calling ${toolName}...`,
               };
@@ -64,9 +67,11 @@ export async function POST(req: NextRequest) {
               );
             } else if (event.event === "on_tool_end") {
               const toolName = event.name;
+              const toolIcon = get_tool_icon(toolName);
               const data = {
                 type: "tool_end",
                 tool: toolName,
+                tool_icon: toolIcon,
                 chat_id: chat_id,
                 message: `✅ Finished ${toolName}`,
                 // output: event.data?.output,

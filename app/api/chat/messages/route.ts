@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { AgentService } from "@/agents/agent";
 import { AuthError, validateAuthAndGetUserId } from "@/lib/auth";
-import { getChatById } from "@/db/quries";
+import { getChatById, deleteChat } from "@/db/quries";
 
 const querySchema = z.object({
   chat_id: z.string().uuid(),
@@ -96,6 +96,44 @@ export async function GET(req: NextRequest) {
       );
 
     return NextResponse.json({ chat_id: parsedThreadId, messages });
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        { error: "Validation error", details: error.errors },
+        { status: 400 }
+      );
+    }
+    if (error instanceof AuthError) {
+      return NextResponse.json({ error: error.message }, { status: 401 });
+    }
+    console.error(error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(req: NextRequest) {
+  try {
+    const userId = await validateAuthAndGetUserId(req);
+    const { searchParams } = new URL(req.url);
+    const chat_id = searchParams.get("chat_id");
+    const { chat_id: parsedChatId } = querySchema.parse({ chat_id });
+
+    // First check if the chat exists and belongs to the user
+    const chat = await getChatById(parsedChatId, userId);
+    if (!chat) {
+      return NextResponse.json({ error: "Chat not found" }, { status: 404 });
+    }
+
+    // Delete the chat
+    await deleteChat(parsedChatId, userId);
+
+    return NextResponse.json({
+      message: "Chat deleted successfully",
+      chat_id: parsedChatId,
+    });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(

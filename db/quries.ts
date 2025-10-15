@@ -27,6 +27,7 @@ export async function getUserChats(userId: string): Promise<Chat[] | null> {
   const { data, error } = await supabase
     .from("chats")
     .select("*")
+    .order("created_at", { ascending: false })
     .eq("created_by", userId);
 
   if (error) {
@@ -75,4 +76,17 @@ export async function getChatById(
     return null;
   }
   return data[0];
+}
+
+export async function deleteChat(chatId: string, userId: string) {
+  const supabase = await createSupabaseAdmin();
+  const { data, error } = await supabase
+    .from("chats")
+    .delete()
+    .eq("id", chatId)
+    .eq("created_by", userId);
+  if (error) {
+    console.error(error);
+    return null;
+  }
 }
