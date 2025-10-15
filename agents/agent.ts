@@ -2,7 +2,7 @@ import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { ChatGroq } from "@langchain/groq";
 import { PostgresSaver } from "@langchain/langgraph-checkpoint-postgres";
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
-import { get_date_time } from "@/tools/basic";
+import { get_date_time, wikipediaRunner } from "@/tools/basic";
 import { PromptTemplate } from "@langchain/core/prompts";
 import { StringOutputParser } from "@langchain/core/output_parsers";
 
@@ -24,7 +24,9 @@ export class AgentService {
   private static instance: ReactAgentExecutor | null = null;
 
   static async get(): Promise<ReactAgentExecutor> {
-    if (AgentService.instance) return AgentService.instance;
+    if (AgentService.instance) {
+      return AgentService.instance;
+    }
 
     const connString = process.env.SUPABASE_DB_URL;
     if (!connString) {
@@ -38,7 +40,7 @@ export class AgentService {
 
     AgentService.instance = createReactAgent({
       llm: groq_model,
-      tools: [get_date_time],
+      tools: [get_date_time, wikipediaRunner],
       checkpointSaver,
     });
 

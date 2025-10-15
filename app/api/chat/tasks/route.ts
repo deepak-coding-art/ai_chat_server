@@ -1,24 +1,6 @@
 import { AuthError, validateAuthAndGetUserId } from "@/lib/auth";
-import { ChatTask } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
-
-const ChatTasks: ChatTask[] = [
-  {
-    title: "Get time",
-    icon: "http://192.168.1.200:3064/images/time-tool-icon-64.png",
-    prompt: "What is the time now?",
-  },
-  {
-    title: "Get Information",
-    icon: "http://192.168.1.200:3064/images/time-tool-icon-64.png",
-    prompt: "What is the weather in Tokyo?",
-  },
-  {
-    title: "Get Weather",
-    icon: "http://192.168.1.200:3064/images/time-tool-icon-64.png",
-    prompt: "What is the weather in Tokyo?",
-  },
-];
+import { ChatTasks } from "@/tools/basic";
 
 export async function GET(req: NextRequest) {
   try {

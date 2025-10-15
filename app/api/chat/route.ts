@@ -54,6 +54,7 @@ export async function POST(req: NextRequest) {
             if (event.event === "on_tool_start") {
               const toolName = event.name;
               const toolIcon = get_tool_icon(toolName);
+              console.log(`using tool ${toolName}`);
               const data = {
                 type: "tool_start",
                 tool: toolName,
@@ -67,6 +68,7 @@ export async function POST(req: NextRequest) {
             } else if (event.event === "on_tool_end") {
               const toolName = event.name;
               const toolIcon = get_tool_icon(toolName);
+              console.log(`finished tool ${toolName}`);
               const data = {
                 type: "tool_end",
                 tool: toolName,

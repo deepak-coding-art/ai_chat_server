@@ -7,7 +7,9 @@ export interface Chat {
 }
 
 export interface ChatTask {
+  name: string;
   title: string;
   icon: string;
+  emoji?: string;
   prompt: string;
 }
