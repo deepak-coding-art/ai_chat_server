@@ -15,8 +15,8 @@ Landing site for downloading the AI Chat Android application APK. Built with Nex
 
 ### Repositories
 
-- App (React Native): `https://github.com/deepak-coding-art/ai_chat_app`
-- Backend: `https://github.com/deepak-coding-art/ai_chat_server`
+- App (React Native): [deepak-coding-art/ai_chat_app](https://github.com/deepak-coding-art/ai_chat_app)
+- Backend: [deepak-coding-art/ai_chat_server](https://github.com/deepak-coding-art/ai_chat_server)
 
 ### Tech Stack (Website)
 
