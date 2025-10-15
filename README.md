@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## AI Chat (Android APK Website)
 
-## Getting Started
+Landing site for downloading the AI Chat Android application APK. Built with Next.js App Router, Tailwind CSS, and shadcn-inspired styling with Lucide-style icons.
 
-First, run the development server:
+### Download
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Direct APK: `/apk/app-release.apk`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Built in 2 days
+- AI agents with tool use (web, files, etc.)
+- Built with React Native for the app
+- Open source repos for app and backend
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Repositories
 
-## Learn More
+- App (React Native): `https://github.com/deepak-coding-art/ai_chat_app`
+- Backend: `https://github.com/deepak-coding-art/ai_chat_server`
 
-To learn more about Next.js, take a look at the following resources:
+### Tech Stack (Website)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Next.js 14 (App Router)
+- React 18
+- Tailwind CSS
+- Lucide-style SVG icons
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Local Development
 
-## Deploy on Vercel
+1. Install dependencies
+   - `npm install`
+2. Run the dev server
+   - `npm run dev`
+3. Build and start
+   - `npm run build`
+   - `npm start`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The app runs on port 3064 by default (see `package.json`).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Project Structure
+
+- `app/page.tsx` — Landing page with download button and links
+- `public/apk/app-release.apk` — The Android APK served for download
+- `public/` — Static assets (logos, icons)
+
+### Contributing
+
+Issues and PRs are welcome. Please open an issue for major changes first.
+
+### License
+
+MIT

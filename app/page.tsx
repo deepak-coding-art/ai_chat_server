@@ -85,7 +85,7 @@ export default function Home() {
               <span>App (React Native)</span>
             </a>
             <a
-              href="#"
+              href="https://github.com/deepak-coding-art/ai_chat_server"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-2 border rounded-lg px-4 py-2 text-sm transition-colors hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a]"
