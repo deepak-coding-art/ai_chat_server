@@ -14,12 +14,7 @@ export const ChatTasks: ChatTask[] = [
     emoji: "🕒",
     prompt: "What is the time now?",
   },
-  {
-    name: "get_weather",
-    title: "Get Weather",
-    icon: `${BASE_URL}/images/time-tool-icon-64.png`,
-    prompt: "What is the weather in Tokyo?",
-  },
+
   {
     name: "WikipediaQueryRun",
     title: "Wikipedia",
