@@ -2,6 +2,10 @@
 
 Landing site for downloading the AI Chat Android application APK. Built with Next.js App Router, Tailwind CSS, and shadcn-inspired styling with Lucide-style icons.
 
+### Website
+
+- [Check the website](https://aichat.builddev.in)
+
 ### Download
 
 - Direct APK: `/apk/app-release.apk`
@@ -50,3 +54,5 @@ Issues and PRs are welcome. Please open an issue for major changes first.
 ### License
 
 MIT
+
+Built with ❤️ by [builddev.in](https://builddev.in).
