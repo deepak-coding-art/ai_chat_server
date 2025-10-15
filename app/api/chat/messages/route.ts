@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
     const agent = await AgentService.get();
     // Read current state for the thread from the graph's checkpointer
     const state = await agent.getState({
-      configurable: { chat_id: parsedThreadId },
+      configurable: { thread_id: parsedThreadId },
     });
 
     // LangGraph state places messages on state.values.messages in v2
