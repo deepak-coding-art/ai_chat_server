@@ -13,16 +13,16 @@ export default function Home() {
           Download AI Chat for Android
         </h1>
         <p className="text-base sm:text-lg text-muted-foreground max-w-2xl">
-          Experience fast, private, on-device AI chat. Get the latest APK and start chatting with your AI assistant in seconds.
+          Experience fast, AI chat. Get the latest APK and start chatting with your AI assistant in seconds.
         </p>
 
-        <div className="w-full sm:w-auto">
+        <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-[600px]">
           <a
             href="/apk/app-release.apk"
             download
             className="w-full bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-105 inline-flex items-center justify-center gap-2"
           >
-            {/* Download icon (Lucide-style inline SVG) */}
+            {/* Download icon */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -41,8 +41,29 @@ export default function Home() {
             </svg>
             <span>Download APK</span>
           </a>
-        </div>
 
+          <a
+            href="/video"
+            className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-105 inline-flex items-center justify-center gap-2"
+          >
+            {/* Play icon */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <polygon points="5 3 19 12 5 21 5 3" />
+            </svg>
+            <span>Watch Demo</span>
+          </a>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full mt-6">
           <div className="rounded-lg border p-4 text-left">
             <div className="font-semibold mb-1">Built in 2 Days</div>
