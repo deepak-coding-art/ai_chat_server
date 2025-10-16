@@ -2,7 +2,12 @@ import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { ChatGroq } from "@langchain/groq";
 import { PostgresSaver } from "@langchain/langgraph-checkpoint-postgres";
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
-import { get_date_time, wikipediaRunner } from "@/tools/basic";
+import {
+  get_date_time,
+  wikipediaRunner,
+  wikipediaWithCitations,
+  googleScholarTool,
+} from "@/tools/basic";
 import { PromptTemplate } from "@langchain/core/prompts";
 import { StringOutputParser } from "@langchain/core/output_parsers";
 
@@ -39,8 +44,8 @@ export class AgentService {
     const checkpointSaver = await PostgresSaver.fromConnString(connString);
 
     AgentService.instance = createReactAgent({
-      llm: groq_model,
-      tools: [get_date_time, wikipediaRunner],
+      llm: google_model,
+      tools: [get_date_time, wikipediaWithCitations, googleScholarTool],
       checkpointSaver,
     });
 

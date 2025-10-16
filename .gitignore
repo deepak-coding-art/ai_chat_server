@@ -38,3 +38,7 @@ next-env.d.ts
 
 # other
 other/
+
+# Big files
+/public/apk/
+/public/videos/*

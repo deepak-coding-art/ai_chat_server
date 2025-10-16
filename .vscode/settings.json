@@ -1,3 +1,11 @@
 {
-  "cSpell.words": ["builddev", "genai", "groq", "langchain", "langgraph"]
+  "cSpell.words": [
+    "builddev",
+    "genai",
+    "groq",
+    "langchain",
+    "langgraph",
+    "SERP",
+    "SERPAPI"
+  ]
 }
