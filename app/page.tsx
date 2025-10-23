@@ -64,18 +64,22 @@ export default function Home() {
             <span>Watch Demo</span>
           </a>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full mt-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full mt-6">
           <div className="rounded-lg border p-4 text-left">
             <div className="font-semibold mb-1">Built in 2 Days</div>
             <div className="text-sm text-muted-foreground">Rapidly shipped from idea to APK in just two days.</div>
           </div>
           <div className="rounded-lg border p-4 text-left">
             <div className="font-semibold mb-1">AI Agents with Tools</div>
-            <div className="text-sm text-muted-foreground">Agentic workflows with tool use for web, files, and more.</div>
+            <div className="text-sm text-muted-foreground">Agentic workflows with Wikipedia and Google Scholar tools for research and citation.</div>
           </div>
           <div className="rounded-lg border p-4 text-left">
             <div className="font-semibold mb-1">Built with React Native</div>
             <div className="text-sm text-muted-foreground">Modern cross‑platform UI, optimized for Android devices.</div>
+          </div>
+          <div className="rounded-lg border p-4 text-left">
+            <div className="font-semibold mb-1">Chat Interface</div>
+            <div className="text-sm text-muted-foreground">Chat with history and memory that remembers context, plus markdown view.</div>
           </div>
         </div>
         <div className="w-full mt-2 text-left">
